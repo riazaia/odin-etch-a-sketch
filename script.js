@@ -20,5 +20,5 @@ allDivs.forEach((div) =>
 const resetButton = document.querySelector("button.reset");
 
 resetButton.addEventListener("click", () => {
-  allDivs.forEach((div) => (div.style.backgroundColor = "#fff"));
+  allDivs.forEach((div) => (div.style.backgroundColor = "unset"));
 });
