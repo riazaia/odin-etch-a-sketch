@@ -2,6 +2,16 @@
   margin: 0;
   padding: 0;
 }
+body {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #bada5555;
+  width: 100vw;
+  height: 100vh;
+}
+
 .container {
   display: grid;
   grid-auto-columns: 1fr;
@@ -11,9 +21,29 @@
   max-width: 95vw;
   height: 500px;
   width: 500px;
-  margin: 5px auto;
+  margin: auto;
 }
 
 .container div {
   border: 1px solid rgb(224, 224, 224);
+}
+
+.container div:hover {
+  background-color: #33333333;
+}
+
+.controls {
+  background-color: #bada55;
+  height: 100vh;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  margin: auto;
+  display: block;
 }
