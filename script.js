@@ -1,21 +1,67 @@
+import { getRandomInt, createHslString, hexToHSL } from "./lib/utils.js";
+
 const container = document.querySelector("div.container");
 
-let gridSize = 16;
-let pencilColor = "hsla(0, 0%, 20%, 1)";
+let controls = {
+  grid: {
+    size: 16,
+  },
+  pencil: {
+    h: 0,
+    s: 0,
+    l: 20,
+  },
+};
+
+let pencil = {
+  h: 0,
+  s: 0,
+  l: 20,
+};
+
+let eraser = false;
+let rainbow = false;
+
 let allDivs = null;
 
 function handleMouseEnter() {
-  this.style.backgroundColor = "hsla(0, 0%, 20%, 0.6)";
+  if (eraser) {
+    this.style.backgroundColor = "transparent";
+  } else {
+    this.style.backgroundColor = createHslString(
+      controls.pencil.h,
+      controls.pencil.s,
+      controls.pencil.l,
+      0.6
+    );
+  }
 }
 
 function handleMouseLeave() {
-  this.style.backgroundColor = pencilColor;
+  if (eraser) {
+    this.style.backgroundColor = "transparent";
+  } else if (rainbow) {
+    this.style.backgroundColor = createHslString(
+      getRandomInt(0, 360),
+      controls.pencil.s,
+      controls.pencil.l,
+      1
+    );
+  } else {
+    this.style.backgroundColor = createHslString(
+      controls.pencil.h,
+      controls.pencil.s,
+      controls.pencil.l,
+      1
+    );
+  }
 }
 
 function handleNewGrid() {
-  gridSize = dialog.returnValue === "default" ? gridSize : dialog.returnValue;
+  controls.grid.size =
+    dialog.returnValue === "default" ? controls.grid.size : dialog.returnValue;
 
-  drawGrid(gridSize);
+  drawGrid(controls.grid.size);
 
   outputBox.value =
     dialog.returnValue === "default"
@@ -45,12 +91,23 @@ function drawGrid(size) {
   });
 }
 
-drawGrid(gridSize);
+drawGrid(controls.grid.size);
 
+const rainbowButton = document.querySelector("button.rainbow");
 const resetButton = document.querySelector("button.reset");
+const eraserButton = document.querySelector("button.eraser");
+
+rainbowButton.addEventListener("click", () => {
+  rainbow = !rainbow;
+  eraser = false;
+});
 
 resetButton.addEventListener("click", () => {
-  allDivs.forEach((div) => (div.style.backgroundColor = "unset"));
+  allDivs.forEach((div) => (div.style.backgroundColor = "transparent"));
+});
+
+eraserButton.addEventListener("click", () => {
+  eraser = !eraser;
 });
 
 const newButton = document.querySelector("button.new");
@@ -86,11 +143,11 @@ confirmBtn.addEventListener("click", (event) => {
 
 const colorPicker = document.querySelector("#pencil-color");
 
-const input = document.querySelector("input.test");
-const log = document.getElementById("values");
-
 function updateValue(e) {
-  console.log(e.target.value);
+  console.log(hexToHSL(e.target.value));
+  [controls.pencil.h, controls.pencil.s, controls.pencil.l] = hexToHSL(
+    e.target.value
+  );
 }
 
-colorPicker.addEventListener("input", updateValue);
+colorPicker.addEventListener("change", updateValue);
