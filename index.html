@@ -16,7 +16,27 @@
   </head>
   <body>
     <div class="controls">
+      <dialog id="new-grid">
+        <form>
+          <p>
+            <label>
+              Size:
+              <input type="number" name="" id="" min="8" max="48" step="8" />
+            </label>
+          </p>
+          <div>
+            <button value="cancel" formmethod="dialog">Cancel</button>
+            <button id="confirmBtn" value="default">Confirm</button>
+          </div>
+        </form>
+      </dialog>
+      <button class="new">New</button>
       <button class="reset">Clear</button>
+      <hr />
+      <button>Pencil</button>
+      <button>Rainbow</button>
+      <button>Eraser</button>
+      <input type="color" id="pencil-color" />
     </div>
     <div class="container"></div>
   </body>
